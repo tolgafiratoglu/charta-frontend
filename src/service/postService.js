@@ -1,16 +1,15 @@
 import axios from "axios";
 import routeConfig from "../config/route";
 
-export const postService = (requestData) => {
+const postService = (requestData) => {
 
         return axios.post(
             routeConfig.get('apiUrl') + routeConfig.get('apiRequests.login'), 
             requestData
         ).then(
             (response) => {
-                console.log("response", response)
-                if(response.access) {
-                    return {'status': 'success', 'data': response}
+                if(response.data) {
+                    return {'status': 'success', 'data': response.data}
                 }else{
                     return {'status': 'error', 'error': 'post.failed'}
                 }
@@ -22,3 +21,5 @@ export const postService = (requestData) => {
         );
 
 }
+
+export default postService
