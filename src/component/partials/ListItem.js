@@ -37,6 +37,7 @@ const ListItem = (props) => {
                         {updateButtonVisibility == "1" ? <Button onClick={()=>{props.edit(id)}} color="info"><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon> { t('commons.edit') }</Button> : ''}
                     </Col>
                </Row>
+               { subTitle ? <Row><Col className="col-md-9"><div>{subTitle}</div></Col></Row> : '' }
           </Container> : '')
 
 }
