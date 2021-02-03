@@ -4,6 +4,7 @@ import {faClone, faThumbsUp, faTrashAlt} from "@fortawesome/free-regular-svg-ico
 import {faEdit, faSpinner, faImage, faKey} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {text} from "@fortawesome/fontawesome-svg-core";
 
@@ -24,6 +25,7 @@ const ListItem = (props) => {
     const deleteButtonVisibility = props.deleteButtonVisibility
 
     return(!hidden ? <Container key={id} className="list-container">
+               <ToastContainer />
                <Row>
                     <Col className="col-md-6">
                         <div>
