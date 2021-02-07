@@ -5,10 +5,19 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
 
-import postService from "../service/postService"
+import getService from "../service/getService"
+import deleteService from "../service/deleteService"
 
 import ListItem from "../component/partials/ListItem"
 import Sidebar from "../component/partials/Sidebar"
+
+import { confirmAlert } from 'react-confirm-alert';
+
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
+
+import Pagination from "react-bootstrap-4-pagination";
+
+import systemConfig from "../config/system";
 
 const Building = (props) => {
 
@@ -34,11 +43,36 @@ const Building = (props) => {
           });
     }
 
-    const handlePageChange = (pageNumber) => {
+    const pageChanged = (pageNumber) => {
         setCurrentPage(pageNumber)
-        setList([])
-        getEventList(pageNumber)
+        setListItems([])
+        getBuildingList(pageNumber)
     }
+
+    const getBuildingList = (currentPage) => {
+
+        var pagination = systemConfig.get("pagination.building")
+        var offset = (page - 1) * pagination
+        var getRequest = "offset=" + offset
+
+        getService("building_list", getRequest).then(
+            (response) => {
+                setListItems(response.data.data)
+                setTotalResults(response.data.totalResults)
+            }
+        )
+           
+    }
+
+    const deleteItem = (id) =>{
+        deleteService("building", id).then(
+            (response) => {
+                if(response.data.status == 'success'){
+                    getBuildingList();
+                }
+            }
+        )
+    }   
 
     return (
         <div>
@@ -49,7 +83,6 @@ const Building = (props) => {
                     </Col>
                     <Col xs="12" sm="9">
                         <div className="list-wrapper">
-                            <AdminHeader addNewCallback={() => { addNewCallback() }} showAddButton="1" headerTitle="Events List"></AdminHeader>
                             {listItems && listItems.length > 0 ? listItems.map(function(listItem, idx){
                                 return (
                                     <ListItem id={listItem.id} edit={editCallback} delete={deleteCallback} key={listItem.id} title={listItem.code}></ListItem>
@@ -61,7 +94,7 @@ const Building = (props) => {
                             itemsCountPerPage={10}
                             totalItemsCount={totalResults}
                             pageRangeDisplayed={5}
-                            onChange={handlePageChange.bind(this)}
+                            onChange={pageChanged.bind(this)}
                         />
                     </Col>
                 </Row>

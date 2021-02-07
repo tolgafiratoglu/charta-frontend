@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import Login from "./component/Login"
+import Building from "./component/Building"
 
 import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
 

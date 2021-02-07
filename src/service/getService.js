@@ -1,11 +1,10 @@
 import axios from "axios";
 import routeConfig from "../config/route";
 
-const postService = (urlContext, requestData) => {
+const getService = (urlContext, getRequestData) => {
 
-        return axios.post(
-            routeConfig.get('apiUrl') + routeConfig.get('apiRequests.' + urlContext), 
-            requestData
+        return axios.get(
+            routeConfig.get('apiUrl') + routeConfig.get('apiRequests.' + urlContext) + "?" + getRequestData
         ).then(
             (response) => {
                 if(response.data) {
@@ -16,10 +15,10 @@ const postService = (urlContext, requestData) => {
             }
         ).catch(
             (response) => {
-                return {'status': 'error', 'error': 'response'}
+                return {'status': 'error', 'error': response}
             }
         );
 
 }
 
-export default postService
+export default getService

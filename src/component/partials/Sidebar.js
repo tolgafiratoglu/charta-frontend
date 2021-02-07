@@ -1,19 +1,12 @@
 import React, { Component, useEffect } from 'react';
 
-import {faHome, faBuilding} from "@fortawesome/free-solid-svg-icons";
-
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
 import { Nav, NavLink} from 'reactstrap';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBuilding} from "@fortawesome/free-regular-svg-icons";
 
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
-
-useEffect(() => {
-
-}, []);
-
-const Sidebar = (props) = {
+const Sidebar = (props) => {
 
     const { t, i18n } = useTranslation();
 

@@ -15,7 +15,7 @@ const Login = (props) => {
 
     const submitLogin = async () => {
         // Call asyncron post service:
-        return await postService({"username": username, "password": password}).then(
+        return await postService("login", {"username": username, "password": password}).then(
             (response) => {
                 if(response.status === "success"){
                     const responseData = response.data 
