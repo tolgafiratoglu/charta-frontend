@@ -1,10 +1,10 @@
 import axios from "axios";
-import routeConfig from "../config/route";
+import config from "../config/system";
 
 const postService = (urlContext, requestData) => {
 
         return axios.post(
-            routeConfig.get('apiUrl') + routeConfig.get('apiRequests.' + urlContext), 
+            config.get('apiUrl') + config.get('apiRequests.' + urlContext),
             requestData
         ).then(
             (response) => {

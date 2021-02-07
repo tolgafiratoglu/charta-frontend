@@ -6,6 +6,7 @@ import {faBuilding} from "@fortawesome/free-regular-svg-icons";
 
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
+
 const Sidebar = (props) => {
 
     const { t, i18n } = useTranslation();

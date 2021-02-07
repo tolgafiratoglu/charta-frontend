@@ -1,9 +1,9 @@
 import axios from "axios";
 import config from "../config/system";
 
-const getService = (urlContext, getRequestData) => {
+const deleteService = (urlContext, getRequestData) => {
 
-        return axios.get(
+        return axios.delete(
             config.get('apiUrl') + config.get('apiRequests.' + urlContext) + "?" + getRequestData
         ).then(
             (response) => {
@@ -21,4 +21,4 @@ const getService = (urlContext, getRequestData) => {
 
 }
 
-export default getService
+export default deleteService

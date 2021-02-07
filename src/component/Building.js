@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import  { Redirect } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css';
@@ -17,7 +17,7 @@ import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 import Pagination from "react-bootstrap-4-pagination";
 
-import systemConfig from "../config/system";
+import config from "../config/system";
 
 const Building = (props) => {
 
@@ -27,6 +27,9 @@ const Building = (props) => {
     const [page, setCurrentPage] = React.useState(1);
     const [totalResults, setTotalResults] = React.useState(0);
 
+    useEffect(() => {
+        getBuildingList(1)
+    }, []);
 
     const editCallback = (id) =>{
         props.history.push("/building/edit/" + id)
@@ -51,7 +54,7 @@ const Building = (props) => {
 
     const getBuildingList = (currentPage) => {
 
-        var pagination = systemConfig.get("pagination.building")
+        var pagination = config.get("pagination.building")
         var offset = (page - 1) * pagination
         var getRequest = "offset=" + offset
 
@@ -68,7 +71,7 @@ const Building = (props) => {
         deleteService("building", id).then(
             (response) => {
                 if(response.data.status == 'success'){
-                    getBuildingList();
+                    getBuildingList(1);
                 }
             }
         )
