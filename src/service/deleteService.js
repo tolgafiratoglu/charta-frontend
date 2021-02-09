@@ -1,7 +1,17 @@
 import axios from "axios";
 import config from "../config/system";
 
-const deleteService = (urlContext, getRequestData) => {
+import HttpService from "./httpService"
+
+const deleteService = (urlContext, getRequestData, authorizationHeader) => {
+
+        var authHeader = {}
+        if(authorizationHeader == true){
+            var jwtToken = HttpService.getPrivateConfig()
+            if(jwtToken != false){
+                authHeader = jwtToken
+            }
+        }
 
         return axios.delete(
             config.get('apiUrl') + config.get('apiRequests.' + urlContext) + "?" + getRequestData

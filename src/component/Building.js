@@ -7,6 +7,7 @@ import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText, A
 
 import getService from "../service/getService"
 import deleteService from "../service/deleteService"
+import HttpService from "../service/httpService"
 
 import ListItem from "../component/partials/ListItem"
 import Sidebar from "../component/partials/Sidebar"
@@ -22,6 +23,7 @@ import config from "../config/system";
 const Building = (props) => {
 
     const [listItems, setListItems] = React.useState([]);
+    const [error, setError] = React.useState("");
     const { t, i18n } = useTranslation();
 
     const [page, setCurrentPage] = React.useState(1);
@@ -58,10 +60,14 @@ const Building = (props) => {
         var offset = (page - 1) * pagination
         var getRequest = "offset=" + offset
 
-        getService("building_list", getRequest).then(
+        getService("building_list", getRequest, true).then(
             (response) => {
-                setListItems(response.data.data)
-                setTotalResults(response.data.totalResults)
+                if(response.status === "success"){
+                    setListItems(response.data.data)
+                    setTotalResults(response.data.totalResults)
+                }else{
+                    HttpService.redirectToLogin()
+                }
             }
         )
            
@@ -86,6 +92,7 @@ const Building = (props) => {
                     </Col>
                     <Col xs="12" sm="9">
                         <div className="list-wrapper">
+                            {error != "" && <Alert color="warning">{error}</Alert>}
                             {listItems && listItems.length > 0 ? listItems.map(function(listItem, idx){
                                 return (
                                     <ListItem id={listItem.id} edit={editCallback} delete={deleteCallback} key={listItem.id} title={listItem.code}></ListItem>
