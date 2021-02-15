@@ -27,7 +27,13 @@ const Building = (props) => {
     const { t, i18n } = useTranslation();
 
     const [page, setCurrentPage] = React.useState(1);
-    const [totalResults, setTotalResults] = React.useState(0);
+    const resultsPerPage = 10;
+
+    const [paginationConfig, setPaginationConfig] = React.useState({
+        totalPages: 1,
+        currentPage: 1,
+        showMax: 5
+    })    
 
     useEffect(() => {
         getBuildingList(1)
@@ -63,8 +69,13 @@ const Building = (props) => {
         getService("building_list", getRequest, true).then(
             (response) => {
                 if(response.status === "success"){
-                    setListItems(response.data.data)
-                    setTotalResults(response.data.totalResults)
+                    setListItems(response.data.results)
+                    setPaginationConfig({
+                        totalPages: response.data.count,
+                        currentPage: 1,
+                        showMax: 5, 
+                        onClick: pageChanged
+                    })
                 }else{
                     HttpService.redirectToLogin(props.history)
                 }
@@ -99,13 +110,7 @@ const Building = (props) => {
                                 )
                             }) : 'No Buildings Yet'}
                         </div>
-                        <Pagination
-                            activePage={page}
-                            itemsCountPerPage={10}
-                            totalItemsCount={totalResults}
-                            pageRangeDisplayed={5}
-                            onChange={pageChanged.bind(this)}
-                        />
+                        <Pagination {...paginationConfig} />
                     </Col>
                 </Row>
             </Container>
