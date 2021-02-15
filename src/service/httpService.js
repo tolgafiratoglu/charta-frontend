@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createBrowserHistory } from 'history'
+import  { Redirect } from 'react-router-dom'
 
 export default class HttpService extends React.Component {
 
@@ -22,10 +22,10 @@ export default class HttpService extends React.Component {
 
     }
 
-    static redirectToLogin() {
+    static redirectToLogin(history) {
         localStorage.setItem('jwtToken', '')
 
-        const history = createBrowserHistory()
+        // const history = createBrowserHistory()
         history.push("/login")
     }
 

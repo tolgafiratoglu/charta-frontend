@@ -22,7 +22,6 @@ const getService = (urlContext, getRequestData, authorizationHeader) => {
                 if(response.data != "undefined") {
                     return {'status': 'success', 'data': response.data}
                 }else{
-                    console.log("response-",response)
                     return {'status': 'error', 'error': response.error.response.data.detail}
                 }
             }

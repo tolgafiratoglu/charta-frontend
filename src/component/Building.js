@@ -66,7 +66,7 @@ const Building = (props) => {
                     setListItems(response.data.data)
                     setTotalResults(response.data.totalResults)
                 }else{
-                    HttpService.redirectToLogin()
+                    HttpService.redirectToLogin(props.history)
                 }
             }
         )
